@@ -12,6 +12,7 @@ const busRouter = require("./controller/busController/bus.controller");
 const userRouter = require("./controller/busController/user.controller");
 const orderRouter = require("./controller/busController/order.controller")
 const paymentController = require('./controller/busController/payment.controller');
+const { convertToApiErr, handleError } = require('./middlewares/handleError');
 const mongoUri = `mongodb+srv://${process.env.DB_HOST}:${process.env.DB_PASS}@cluster0.ucfrjku.mongodb.net/${process.env.DB_ADMIN}`;
 const stripe = require('stripe')(process.env.DB_STRIPE_KEY);
 
@@ -91,6 +92,11 @@ app.post("/createUser", async (req, res) => {
 		console.log(err);
 	}
 });
+
+app.use(convertToApiErr);
+app.use((err, req, res, next) => {
+	handleError(err, res)
+})
 
 const port = process.env.PORT || 3001;
 

@@ -1,6 +1,6 @@
 const {flightService} = require('../../services/flightServices')
 
-const airlineController = {
+const flightController = {
 
 
     async addFlight(req, res, next){
@@ -42,10 +42,21 @@ const airlineController = {
             res.json(flight);
         }
         catch(err){
-            next(err.message)
+            next(err)
+        }
+    },
+    async getFlightsByDetails(req, res, next){
+
+        try{
+            const boardLoc = req.params.boardLoc, destLoc = req.params.destLoc, time = req.params.time;
+            const flight = await flightService.getFlightsByDetails(boardLoc, destLoc, time);
+            res.json(flight);
+        }
+        catch(err){
+            next(err)
         }
     }
     
 }
 
-module.exports = airlineController;
+module.exports = flightController;

@@ -15,6 +15,16 @@ const addBooking = async(args)=>{
     }
 }
 
+const getBookings = async(id)=>{
+    try{
+        const bookings = await Bookings.find({_id:id});
+        return bookings;
+    }catch(err){
+        throw err;
+    }
+}
+
 module.exports = {
-    addBooking 
+    addBooking,
+    getBookings
 }
