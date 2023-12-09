@@ -8,6 +8,12 @@ const bookingSchema = mongoose.Schema({
         required:true
     },
 
+    passengers:{
+        type:Array,
+        required:true,
+        default:[]
+    },
+
     bookingDate:{
         type:Date,
         required:true
@@ -42,7 +48,18 @@ const bookingSchema = mongoose.Schema({
         required:true,
         type:Date,
         default:Date.now
+    },
+    luggage:{
+        required:true,
+        type:Object,
+        default:{
+            cabin_weight:7,
+            cabin_bags: 1,
+            checkin_weight:46,
+            checkin_bags:2
+        }
     }
+    
     
 });
 

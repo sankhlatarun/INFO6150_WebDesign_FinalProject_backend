@@ -37,14 +37,37 @@ const flightSchema = mongoose.Schema({
         type:Object,
         required:true,
         default:{
-            economy:0,
-            business:0,
+            economy:15,
+            business:20,
             first:0
         }
     },
     price:{
         required:true,
-        type:Number
+        type:Number,
+        default:0
+    },
+
+    seat_price:{
+        required:true,
+        type:Object,
+        default:{
+            economy:50,
+            business:100,
+            first:500
+        }
+    },
+    free_luggage:{
+        required:true,
+        type:Object,
+        default:{
+            cabin_weight:7,
+            cabin_bags: 1,
+            price_cabin:50,
+            price_checkin:75,
+            checkin_weight:46,
+            checkin_bags:2
+        }
     }
     
 });
