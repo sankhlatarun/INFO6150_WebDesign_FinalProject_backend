@@ -1,7 +1,7 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const UserModel = require("../../models/busModels/user.model");
-
+// const UserModel = require("../../models/busModels/user.model");
+const UserModel = require("./../../models/user.Model");
 const app = express.Router();
 
 app.post("/signup", async (req, res) => {

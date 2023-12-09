@@ -55,6 +55,9 @@ const UserSchema = mongoose.Schema({
         required: true,
         maxLength: 255
     },
+    gender: {
+        type:String
+    },
     bookedHotels: [
         {
             hotel: {

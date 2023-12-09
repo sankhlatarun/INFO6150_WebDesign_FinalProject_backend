@@ -14,13 +14,15 @@ const paymentController = require('./controller/busController/payment.controller
 const mongoUri = `mongodb+srv://${process.env.DB_HOST}:${process.env.DB_PASS}@cluster0.ucfrjku.mongodb.net/${process.env.DB_ADMIN}`;
 
 mongoose.connect(mongoUri, {
-    usenewUrlParser:true,
-    useUnifiedTopology:true,
+useNewUrlParser:true,
+useUnifiedTopology:true,
 })
 .then(() => {
 	console.log("connected")
 })
-
+.catch((err) => {
+    console.error("Error connecting to MongoDB:", err.message);
+});
 app.use(express.json());
 
 app.use(xss());
@@ -31,6 +33,7 @@ app.use("/user",userRouter)
 app.use("/city", cityRouter);
 app.use("/bus", busRouter);
 app.use("/order", orderRouter);
+app.use("/api/payment", paymentController);
 app.use('/flights',flightRouter);
 app.use('/hotels/',require('./routes/hotelRoutes'));
 
