@@ -13,17 +13,19 @@ const userRouter = require("./controller/busController/user.controller");
 const orderRouter = require("./controller/busController/order.controller")
 const paymentController = require('./controller/busController/payment.controller');
 const mongoUri = `mongodb+srv://${process.env.DB_HOST}:${process.env.DB_PASS}@cluster0.ucfrjku.mongodb.net/${process.env.DB_ADMIN}`;
+const stripe = require('stripe')(process.env.DB_STRIPE_KEY);
 
 mongoose.connect(mongoUri, {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 })
-	.then(() => {
-		console.log("connected")
-	})
-	.catch((err) => {
-		console.error("Error connecting to MongoDB:", err.message);
-	});
+.then(() => {
+	console.log("connected")
+})
+.catch((err) => {
+	console.error("Error connecting to MongoDB:", err.message);
+});
+
 app.use(express.json());
 
 app.use(xss());
@@ -39,6 +41,26 @@ app.use('/flights', flightRouter);
 app.use('/hotels/', require('./routes/hotelRoutes'));
 
 app.use("/api/payment", paymentController);
+
+app.get("/secret", async (req, res) => {
+	try {
+
+		if (!req.body.amount) return res.status(400).send('Amount is required');
+		const stripe = require('stripe')(process.env.DB_STRIPE_KEY);
+		const paymentIntent = await stripe.paymentIntents.create({
+			amount: req.body.amount,
+			currency: 'usd',
+			automatic_payment_methods: {
+				enabled: true,
+			},
+		});
+		res.send({ client_secret: paymentIntent.client_secret });
+	}
+	catch (err) {
+		console.log(err)
+		res.status(500).json({ error: 'Internal Server Error', message: err.message });
+	}
+});
 
 app.get("/", (req, res) => {
 	res.send("Welcome to TravelEasy");
