@@ -17,7 +17,7 @@ const addBooking = async(args)=>{
 
 const getBookings = async(id)=>{
     try{
-        const bookings = await Bookings.find({_id:id});
+        const bookings = await Bookings.find({userId:id});
         return bookings;
     }catch(err){
         throw err;
