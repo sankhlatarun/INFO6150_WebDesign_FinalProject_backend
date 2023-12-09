@@ -1,13 +1,38 @@
 const express = require("express");
 const jwt = require("jsonwebtoken");
-const UserModel = require("./../../models/user.Model");
+const { User } = require("./../../models/user.Model");
 const app = express.Router();
 
 app.post("/signup", async (req, res) => {
-  let { email } = req.body;
+
 
   try {
-    let user = await UserModel.findOne({ email: email });
+    let { email } = req.body;
+    if (!email) {
+      return res.send({ status: "Failed", message: "Please enter email" });
+    }
+
+    if (!req.body.password) {
+      return res.send({
+        status: "Failed",
+        message: "Please enter password",
+      });
+    }
+
+    if(!req.body.gender){
+      return res.send({
+        status: "Failed",
+        message:"Please enter Gender"
+      });
+    }
+
+    if(!req.body.role){
+      return res.send({
+        status: "Failed",
+        message:"Please enter Role"
+      });
+    }
+    let user = await User.findOne({ email: email });
 
     if (user) {
       return res.send({
@@ -15,7 +40,25 @@ app.post("/signup", async (req, res) => {
         message: "Please try with different email",
       });
     }
-    user = await UserModel.create(req.body);
+    const userBody = {
+      name: req.body.name,
+      email: req.body.email,
+      password: req.body.password,
+      avatar: '',
+      role: req.body.role,
+      address: '',
+      city: '',
+      state: '',
+      country: '',
+      zip: '',
+      phone: '',
+      gender: req.body.gender,
+      bookedHotels: [],
+    }
+    // console.log(req.body);
+    
+    user = await User.create(userBody);
+
 
     return res.send({
       status: "Success",
@@ -30,7 +73,7 @@ app.post("/login", async (req, res) => {
   let { email, password } = req.body;
   // console.log(req.body);
   try {
-    let user = await UserModel.findOne({ email });
+    let user = await User.findOne({ email });
     // console.log(user);
     if (!user) {
       return res.send({ status: "Failed", message: "Please check your email" });
