@@ -4,8 +4,6 @@ const { User } = require("./../../models/user.Model");
 const app = express.Router();
 
 app.post("/signup", async (req, res) => {
-
-
   try {
     let { email } = req.body;
     if (!email) {
@@ -44,14 +42,14 @@ app.post("/signup", async (req, res) => {
       name: req.body.name,
       email: req.body.email,
       password: req.body.password,
-      avatar: '',
+      avatar: req.body.avatar,
       role: req.body.role,
-      address: '',
-      city: '',
-      state: '',
-      country: '',
-      zip: '',
-      phone: '',
+      address: req.body.address,
+      city: req.body.city,
+      state: req.body.state,
+      country: req.body.country,
+      zip: req.body.zip,
+      phone:  req.body.phone,
       gender: req.body.gender,
       bookedHotels: [],
     }
