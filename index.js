@@ -42,7 +42,7 @@ app.use('/hotels/', require('./routes/hotelRoutes'));
 
 app.use("/api/payment", paymentController);
 
-app.get("/secret", async (req, res) => {
+app.post("/secret", async (req, res) => {
 	try {
 
 		if (!req.body.amount) return res.status(400).send('Amount is required');
