@@ -25,11 +25,13 @@ const addHotel = async (req, res) => {
     longitude: req.body.longitude,
     latitude: req.body.latitude,
     amenities: req.body.amenities,
-    rating: isNaN(req.body.rating) ? 0 : Number(rating),
+    rating: req.body.rating,
     website: req.body.website,
     tollFree: req.body.tollFree,
     type: req.body.type,
-    email: req.body.email
+    email: req.body.email,
+    photos : req.body.photos ? req.body.photos : [],
+    rate : req.body.rate ? req.body.rate : 100,
   });
 
   const data  = await hotel.save();
@@ -54,6 +56,7 @@ const updateHotel = async (req, res) => {
   // Logic to update a Hotel
   try{
     const hotel = await Hotel.findById(req.params.id);
+    console.log(hotel);
     if(hotel){
       hotel.name = req.body.name || hotel.name;
       hotel.address = req.body.address || hotel.address;
@@ -80,6 +83,8 @@ const updateHotel = async (req, res) => {
       hotel.tollFree = req.body.tollFree || hotel.tollFree;
       hotel.type = req.body.type || hotel.type;
       hotel.email = req.body.email || hotel.email;
+      hotel.photos = req.body.photos ? req.body.photos : [];
+      hotel.rate = req.body.rate ? req.body.rate : 100;
       const updatedHotel = await hotel.save();
       res.send({message:'Hotel Updated', hotel: updatedHotel});
     } else {
