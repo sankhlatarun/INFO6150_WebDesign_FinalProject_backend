@@ -3,57 +3,51 @@ const Schema = mongoose.Schema;
 
 const UserSchema = mongoose.Schema({
     name: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+       
     },
     email: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+       
     },
     password: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+      
+       
     },
     avatar: {
-        type: String,
+        type: String
     },
     role: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+        
     },
     address: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+        
     },
     city: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+       
     },
     state: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+        
     },
     country: {
         type: String,
-        required: true,
-        maxLength: 255
+       
     },
     zip: {
-        type: String,
-        required: true,
-        maxLength: 255
+        type: String
+       
     },
     phone: {
         type: String,
-        required: true,
         maxLength: 255
+    },
+    gender: {
+        type:String
     },
     bookedHotels: [
         {
